@@ -1,11 +1,11 @@
 package org.xyz.monitor.dc.event;
 
+import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.xyz.monitor.rules.BasicEvent;
-import org.xyz.monitor.rules.ExtractEvent;
 
 import static org.xyz.monitor.dc.common.Constant.EVENT_SPLIT_CHAR;
 
@@ -19,7 +19,7 @@ import static org.xyz.monitor.dc.common.Constant.EVENT_SPLIT_CHAR;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessLogEvent implements BasicEvent, ExtractEvent {
+public class AccessLogEvent implements BasicEvent {
     private Long dateline;
     private String datetime;
     private String ip;
@@ -32,7 +32,7 @@ public class AccessLogEvent implements BasicEvent, ExtractEvent {
     private String permissionStatus;
     private String callbackParam;
     private String json;
-    private Long bigint;
+    private Long costime;
 
     @Override
     public Long extractEventTimeMillis() {
@@ -40,14 +40,39 @@ public class AccessLogEvent implements BasicEvent, ExtractEvent {
     }
 
     @Override
-    public Object extractEventFromString(String str) {
+    public String toJsonString() {
+
+        return JSON.toJSONString(this, true);
+    }
+
+
+    public static AccessLogEvent extractEventFromString(String str) {
         String[] arr = str.split(EVENT_SPLIT_CHAR, -1);
-        if (arr.length == this.getClass().getDeclaredFields().length) {
-            AccessLogEvent event = new AccessLogEvent(
+        if (arr.length == 13) {
+            try {
+                AccessLogEvent event = new AccessLogEvent(
+                        Long.valueOf(arr[0]),
+                        arr[1],
+                        arr[2],
+                        arr[3],
+                        arr[4],
+                        Long.valueOf(arr[5]),
+                        arr[6],
+                        arr[7],
+                        arr[8],
+                        arr[9],
+                        arr[10],
+                        arr[11],
+                        Long.valueOf(arr[12])
 
-            );
+                );
+                return event;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
 
-            return event;
+
         } else {
             return null;
         }

@@ -1,11 +1,11 @@
 package org.xyz.monitor.dc.test;
 
 
-import org.xyz.monitor.dc.common.Constant;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
+import org.xyz.monitor.dc.common.Constant;
+import org.xyz.monitor.dc.map.MapAccessLogEvent;
 import org.xyz.monitor.dc.source.KafkaSource;
 
 import java.util.Objects;
@@ -28,7 +28,9 @@ public class TestFlinkReadKafka {
 
         streamSource
                 .filter(Objects::nonNull)
-                .map(x -> DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMdd HH:mm:ss.SSS") + "---" + x + "##" + x.getBytes().length)
+                .map(new MapAccessLogEvent())
+                .map(x -> x.toJsonString())
+//                .map(x -> DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMdd HH:mm:ss.SSS") + "---" + x + "##" + x.getBytes().length)
                 .print();
 
         try {

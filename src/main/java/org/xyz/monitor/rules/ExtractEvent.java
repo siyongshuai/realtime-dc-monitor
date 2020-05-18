@@ -8,6 +8,7 @@ public interface ExtractEvent {
 
     /**
      * 从字符串中提取事件
+     *
      * @param str
      * @return
      */
