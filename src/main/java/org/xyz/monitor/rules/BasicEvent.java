@@ -12,6 +12,11 @@ public interface BasicEvent {
      */
     Long extractEventTimeMillis();
 
+    /**
+     * 格式化为json
+     *
+     * @return
+     */
     String toJsonString();
 
 }

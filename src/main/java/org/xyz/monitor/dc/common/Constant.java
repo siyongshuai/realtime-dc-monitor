@@ -12,6 +12,7 @@ public class Constant {
     public static final String TEST_TOPIC = "log_dc_report_access";
 
     public static final String EVENT_SPLIT_CHAR = "\t";
+    public static final String yyyyMMdd_PATTERN = "yyyyMMdd";
 
 
 }

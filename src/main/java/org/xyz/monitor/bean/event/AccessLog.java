@@ -1,4 +1,4 @@
-package org.xyz.monitor.dc.event;
+package org.xyz.monitor.bean.event;
 
 import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import static org.xyz.monitor.dc.common.Constant.EVENT_SPLIT_CHAR;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessLogEvent implements BasicEvent {
+public class AccessLog {
     private Long dateline;
     private String datetime;
     private String ip;
@@ -32,25 +32,14 @@ public class AccessLogEvent implements BasicEvent {
     private String permissionStatus;
     private String callbackParam;
     private String json;
-    private Long costime;
-
-    @Override
-    public Long extractEventTimeMillis() {
-        return this.getDateline();
-    }
-
-    @Override
-    public String toJsonString() {
-
-        return JSON.toJSONString(this, true);
-    }
+    private Long cosTime;
 
 
-    public static AccessLogEvent extractEventFromString(String str) {
+    public static AccessLog extractEventFromString(String str) {
         String[] arr = str.split(EVENT_SPLIT_CHAR, -1);
         if (arr.length == 13) {
             try {
-                AccessLogEvent event = new AccessLogEvent(
+                AccessLog event = new AccessLog(
                         Long.valueOf(arr[0]),
                         arr[1],
                         arr[2],
