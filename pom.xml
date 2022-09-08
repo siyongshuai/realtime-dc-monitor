@@ -13,7 +13,7 @@
         <scala.binary.version>2.11</scala.binary.version>
         <scala.version>2.11.12</scala.version>
         <fastjson.version>1.2.60</fastjson.version>
-        <postgresql.version>42.2.5</postgresql.version>
+        <postgresql.version>42.4.1</postgresql.version>
         <mybatis.version>3.4.6</mybatis.version>
         <flink.scope>compile</flink.scope>
     </properties>
